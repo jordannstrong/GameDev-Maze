@@ -3,11 +3,12 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 	public GUISkin skin;
+	public string GameName;
 
 	void OnGUI()
 	{
 		GUI.skin = skin;
-		GUI.Label (new Rect(10,10, 400,75), "Gorgons Labyrinth");
+		GUI.Label (new Rect(10,10, 400,75), GameName);
 		if (PlayerPrefs.GetInt("Level Completed") > 0)
 		{
 
