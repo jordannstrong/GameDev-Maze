@@ -12,9 +12,9 @@ public class Patrol : MonoBehaviour {
 	public float delay; 
 
 	// Used for rage mechanic
+	private GameObject player;
 	private float distance;
 	private float speedModifier = 2.0f;
-	public Transform player;
 	public float visionRange;
 
 
@@ -27,7 +27,9 @@ public class Patrol : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		timer += Time.deltaTime;
-		distance = Vector3.Distance (transform.position, player.position);
+		player = GameObject.FindGameObjectWithTag ("Player");
+
+		distance = Vector3.Distance (transform.position, player.transform.position);
 
 		if (timer > delay) {
 			if (transform.position == patrolPoints [currentPoint].position) {
