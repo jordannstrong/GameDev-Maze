@@ -20,6 +20,7 @@ public class Patrol : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		player = GameObject.FindGameObjectWithTag ("Player");
 		transform.position = patrolPoints[0].position;
 		currentPoint = 0;
 	}
@@ -27,7 +28,6 @@ public class Patrol : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		timer += Time.deltaTime;
-		player = GameObject.FindGameObjectWithTag ("Player");
 
 		distance = Vector3.Distance (transform.position, player.transform.position);
 
