@@ -21,6 +21,8 @@ public class MazeSpawner : MonoBehaviour {
 	public GameObject Pillar = null;
 	public GameObject Fence = null;
 	public GameObject Statue = null;
+	public GameObject SpikeTrap = null;
+	public GameObject Door = null;
 	public int Rows = 5;
 	public int Columns = 5;
 	public float CellWidth = 5;
@@ -70,23 +72,38 @@ public class MazeSpawner : MonoBehaviour {
 				if (count > 2 && !((column + 1) == Columns) && !((row + 1) == Rows) && !(column == 0) && !(row == 0)) {
 					tmp = Instantiate (Statue, new Vector3 (((x + CellWidth / 2) - 2.4f), 0, z) + Statue.transform.position, Quaternion.Euler (0, 90, 0)) as GameObject;// right
 					tmp.transform.Rotate (270, 0, 0);
-				} 
-				else {
+				} else {
 					if (cell.WallRight) {
 						if ((column + 1) == Columns) {
 							tmp = Instantiate (Fence, new Vector3 (x + CellWidth / 2, 0, z) + Fence.transform.position, Quaternion.Euler (0, 90, 0)) as GameObject;// right
 							tmp.transform.Rotate (0, 0, 0);
 						} else {
 							tmp = Instantiate (Wall, new Vector3 (x + CellWidth / 2, 0, z) + Wall.transform.position, Quaternion.Euler (0, 90, 0)) as GameObject;// right
+							if (Random.value < 0.95) {
+								
+							} else {
+								tmp = Instantiate (SpikeTrap, new Vector3 (x + CellWidth / 2, 0, z) + SpikeTrap.transform.position, Quaternion.Euler (0, 90, 0)) as GameObject;// right
+								tmp.transform.Rotate (0, 90, 0);
+							}
 						}
 						tmp.transform.parent = transform;
 					}
 					if (cell.WallFront) {
 						if ((row + 1) == Rows) {
-							tmp = Instantiate (Fence, new Vector3 (x, 0, z + CellHeight / 2) + Fence.transform.position, Quaternion.Euler (0, 0, 0)) as GameObject;// front
-							tmp.transform.Rotate (0, 0, 0);
+							if ((column + 1) == Columns) {
+								tmp = Instantiate (Door, new Vector3 (x, 0, z + CellHeight / 2) + Door.transform.position, Quaternion.Euler (0, 0, 0)) as GameObject;// front
+
+							} else {
+								tmp = Instantiate (Fence, new Vector3 (x, 0, z + CellHeight / 2) + Fence.transform.position, Quaternion.Euler (0, 0, 0)) as GameObject;// front
+								tmp.transform.Rotate (0, 0, 0);}
 						} else {
 							tmp = Instantiate (Wall, new Vector3 (x, 0, z + CellHeight / 2) + Wall.transform.position, Quaternion.Euler (0, 0, 0)) as GameObject;// front
+							if (Random.value < 0.95) {
+								
+							} else {
+								tmp = Instantiate (SpikeTrap, new Vector3 (x, 0, z + CellHeight / 2) + SpikeTrap.transform.position, Quaternion.Euler (0, 0, 0)) as GameObject;// front
+								tmp.transform.Rotate (0, 90, 0);
+							}
 						}
 						tmp.transform.parent = transform;
 					}
@@ -96,6 +113,12 @@ public class MazeSpawner : MonoBehaviour {
 							tmp.transform.Rotate (0, 0, 0);
 						} else {
 							tmp = Instantiate (Wall, new Vector3 (x - CellWidth / 2, 0, z) + Wall.transform.position, Quaternion.Euler (0, 270, 0)) as GameObject;// left
+
+							if (Random.value < 0.95) {
+							} else {
+								tmp = Instantiate (SpikeTrap, new Vector3 (x - CellWidth / 2, 0, z) + SpikeTrap.transform.position, Quaternion.Euler (0, 270, 0)) as GameObject;// left
+								tmp.transform.Rotate (0, 90, 0);
+							}
 						}
 						tmp.transform.parent = transform;
 					}
@@ -105,6 +128,12 @@ public class MazeSpawner : MonoBehaviour {
 							tmp.transform.Rotate (0, 0, 0);
 						} else {
 							tmp = Instantiate (Wall, new Vector3 (x, 0, z - CellHeight / 2) + Wall.transform.position, Quaternion.Euler (0, 180, 0)) as GameObject;// back
+
+							if (Random.value < 0.95) {
+							} else {
+								tmp = Instantiate (SpikeTrap, new Vector3 (x, 0, z - CellHeight / 2) + SpikeTrap.transform.position, Quaternion.Euler (0, 180, 0)) as GameObject;// back
+								tmp.transform.Rotate (0, 90, 0);
+							}
 						}
 						tmp.transform.parent = transform;
 					}
