@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour {
 		if (PlayerPrefs.GetInt("Level Completed") > 0)
 		{
 			currentLevel = PlayerPrefs.GetInt("Level Completed");
+			Random.seed = PlayerPrefs.GetInt ("Seed ");
 		} else {
 			currentLevel = 0;
 		}
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour {
 			currentLevel += 1;
 			print (currentLevel);
 			SaveGame();
-			Application.LoadLevel(currentLevel);
+			Application.LoadLevel(1);
 		} else {
 			print ("You win!");
 		}
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour {
 	{
 		PlayerPrefs.SetInt("Level Completed", currentLevel);
 		PlayerPrefs.SetInt("Level " + currentLevel.ToString() + " score", currentScore);
+		PlayerPrefs.SetInt("Seed ", Random.seed);
 	}
 
 	void OnGUI()
