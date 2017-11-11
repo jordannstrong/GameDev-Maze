@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour {
 		currentTime = startTime;
 		if (PlayerPrefs.GetInt("Level Completed") > 0) {
 			currentLevel = PlayerPrefs.GetInt("Level Completed");
-			Random.seed = PlayerPrefs.GetInt ("Seed ");
 		} 
 		else {
 			currentLevel = 0;
