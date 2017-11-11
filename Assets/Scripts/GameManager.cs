@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour {
 	{
 		PlayerPrefs.SetInt("Level Completed", currentLevel);
 		PlayerPrefs.SetInt("Level " + currentLevel.ToString() + " score", currentScore);
-		PlayerPrefs.SetInt("Seed ", Random.seed);
+		//PlayerPrefs.SetInt("Seed ", Random.seed);
 	}
 
 	void OnGUI()
