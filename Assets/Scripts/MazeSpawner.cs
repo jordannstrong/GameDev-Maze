@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //<summary>
 //Game object, that creates maze and instantiates it in scene
@@ -16,6 +17,8 @@ public class MazeSpawner : MonoBehaviour {
 	public MazeGenerationAlgorithm Algorithm = MazeGenerationAlgorithm.PureRecursive;
 	public bool FullRandom = false;
 	public int RandomSeed = 12345;
+	public GameObject PatrolEnemy = null;
+	public GameObject ChaseEnemy = null;
 	public GameObject Floor = null;
 	public GameObject Wall = null;
 	public GameObject Pillar = null;
@@ -156,6 +159,48 @@ public class MazeSpawner : MonoBehaviour {
 					tmp.transform.parent.Rotate (0, 90, 0);
 					tmp.transform.parent = transform;
 				}
+			}
+		}
+
+		MazeCell[,] cells = mMazeGenerator.GetAllCells ();
+		List<float[]> validPatrols = new List<float[]> ();
+		for (int col = 0; col < cells.GetLength(0); col++) {
+			for (int row = 0; row < cells.GetLength(1) - 2; row++) {
+				if ((cells[row,col].WallLeft == false) && (cells[row+1,col].WallRight == false) && (cells[row+1,col].WallLeft == false) && (cells[row+2,col].WallRight == false)) {
+					try {
+						float xPos = row*CellHeight;
+						float zPos = col*CellWidth;
+
+						float[] patrolPair = {xPos, zPos, xPos + 2*CellHeight, zPos};
+						validPatrols.Add(patrolPair);
+					} catch {}
+				}
+			}
+		}		
+		for (int col = 0; col < cells.GetLength(0) - 2; col++) {
+			for (int row = 0; row < cells.GetLength(1); row++) {
+				if ((cells[row,col].WallBack == false) && (cells[row,col+1].WallFront == false) && (cells[row,col+1].WallBack == false) && (cells[row,col+1].WallFront == false)) {
+					try {
+						float xPos = row*CellHeight;
+						float zPos = col*CellWidth;
+
+						float[] patrolPair = {xPos, zPos, xPos, zPos + 2*CellWidth};
+						validPatrols.Add(patrolPair);
+					} catch {}
+				}
+			}
+		}
+		foreach (float[] patrolPair in validPatrols) {
+			if (Random.value > 0.0) {
+				GameObject InitialPoint = new GameObject ();
+				InitialPoint.transform.position = new Vector3 ((float)patrolPair.GetValue (0), 1, (float)patrolPair.GetValue (1));
+				GameObject FinalPoint = new GameObject ();
+				FinalPoint.transform.position = new Vector3 ((float)patrolPair.GetValue (2), 1, (float)patrolPair.GetValue (3));
+				Transform[] patrolPoints = { InitialPoint.transform, FinalPoint.transform };
+
+				GameObject enemy = Instantiate (PatrolEnemy) as GameObject;
+				enemy.GetComponent<Patrol> ().patrolPoints = patrolPoints;
+				enemy.GetComponent<Patrol> ().InitializeInfo ();
 			}
 		}
 	}

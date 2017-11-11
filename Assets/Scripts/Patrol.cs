@@ -18,13 +18,13 @@ public class Patrol : MonoBehaviour {
 	public float visionRange;
 
 
-	// Use this for initialization
-	void Start () {
+
+	public void InitializeInfo () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		transform.position = patrolPoints[0].position;
 		currentPoint = 0;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		timer += Time.deltaTime;
@@ -47,5 +47,5 @@ public class Patrol : MonoBehaviour {
 				transform.position = Vector3.MoveTowards (transform.position, patrolPoints [currentPoint].position, moveSpeed * Time.deltaTime);
 			}
 		}
-	}
+	}	
 }

@@ -47,4 +47,8 @@ public abstract class BasicMazeGenerator {
 			throw new System.ArgumentOutOfRangeException();
 		}
 	}
+
+	public MazeCell[,] GetAllCells() {
+		return mMaze;
+	}
 }
