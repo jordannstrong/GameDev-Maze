@@ -15,6 +15,7 @@ public class Patrol : MonoBehaviour {
 	private GameObject player;
 	private float distance;
 	public float visionRange;
+	public float turnSpeed;
 	private float speedModifier = 2.0f;
 
 
@@ -42,10 +43,12 @@ public class Patrol : MonoBehaviour {
 			}
 
 			if (distance < visionRange) {
-				transform.LookAt(player.transform.position);
+				var targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
+				transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 				transform.position = Vector3.MoveTowards(transform.position, patrolPoints [currentPoint].position, moveSpeed * speedModifier * Time.deltaTime);
 			} else {
-				transform.LookAt(patrolPoints[currentPoint].position);
+				var targetRotation = Quaternion.LookRotation(patrolPoints[currentPoint].position - transform.position);
+				transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 				transform.position = Vector3.MoveTowards(transform.position, patrolPoints [currentPoint].position, moveSpeed * Time.deltaTime);
 			}
 		}

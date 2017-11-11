@@ -33,12 +33,12 @@ public class GameManager : MonoBehaviour {
 		if (!completed)
 		{
 			startTime -= Time.deltaTime;
-			currentTime = string.Format("{0:0.0}", startTime);
 			if (startTime <= 0)
 			{
 				startTime = 0;
 				//Application.LoadLevel("main_menu");
 			}
+			currentTime = string.Format("{0:0.0}", startTime);
 		}
 	}
 
@@ -130,14 +130,14 @@ public class GameManager : MonoBehaviour {
 			GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 40, 300, 50), currentScore.ToString() + 
 			          " Score" );
 
-			GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 70, 300, 50), "CONGRADULATIONS YOU WINNN!!");
+			GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 70, 300, 50), "CONGRATULATIONS YOU WINNN!!");
 			}
 			else
 			{
 				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 40, 300, 50), currentScore.ToString() + 
 				          " Score" );
 				
-				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 70, 300, 50), "Compleated Level  "+currentLevel);
+				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 70, 300, 50), "Completed Level  "+currentLevel);
 			}
 
 		}
