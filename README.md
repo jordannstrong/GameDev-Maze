@@ -17,7 +17,7 @@ Graveyard Maze Additions:
 
 How To Play:
 
-Avoid spikes and ghosts while you escape from the graveyard.
+Avoid spikes and ghosts while you find your way out of the graveyard. Exit is marked with blue light.
 
 W - Move forward
 
