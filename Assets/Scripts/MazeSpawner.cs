@@ -191,7 +191,7 @@ public class MazeSpawner : MonoBehaviour {
 			}
 		}
 		foreach (float[] patrolPair in validPatrols) {
-			if (Random.value > 0.0) {
+			if (Random.value >= 0.0) {
 				GameObject InitialPoint = new GameObject ();
 				InitialPoint.transform.position = new Vector3 ((float)patrolPair.GetValue (0), 1, (float)patrolPair.GetValue (1));
 				GameObject FinalPoint = new GameObject ();

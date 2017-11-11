@@ -14,8 +14,8 @@ public class Patrol : MonoBehaviour {
 	// Used for rage mechanic
 	private GameObject player;
 	private float distance;
-	private float speedModifier = 2.0f;
 	public float visionRange;
+	private float speedModifier = 2.0f;
 
 
 
@@ -42,9 +42,11 @@ public class Patrol : MonoBehaviour {
 			}
 
 			if (distance < visionRange) {
-				transform.position = Vector3.MoveTowards (transform.position, patrolPoints [currentPoint].position, moveSpeed * speedModifier * Time.deltaTime);
+				transform.LookAt(player.transform.position);
+				transform.position = Vector3.MoveTowards(transform.position, patrolPoints [currentPoint].position, moveSpeed * speedModifier * Time.deltaTime);
 			} else {
-				transform.position = Vector3.MoveTowards (transform.position, patrolPoints [currentPoint].position, moveSpeed * Time.deltaTime);
+				transform.LookAt(patrolPoints[currentPoint].position);
+				transform.position = Vector3.MoveTowards(transform.position, patrolPoints [currentPoint].position, moveSpeed * Time.deltaTime);
 			}
 		}
 	}	
