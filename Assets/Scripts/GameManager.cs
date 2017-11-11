@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour {
 	// Count
 	public int currentScore;
 	public int highscore;
-	public int tokenCount;
-	private int totalTokenCount;
 	public int currentLevel= 0;
 	public int unlockedLevel;
 
@@ -16,7 +14,8 @@ public class GameManager : MonoBehaviour {
 	public Color warningColorTimer;
 	public Color defaultColorTimer;
 	public float startTime;
-	private string currentTime;
+	public float currentTime;
+	private string currentTimeStr;
 
 	// GUI SKI
 	public GUISkin skin;
@@ -28,77 +27,63 @@ public class GameManager : MonoBehaviour {
 	private bool showWinScreen = false;
 	public int winScreenWidth, winScreenHeight;
 
-	void Update()
-	{
-		if (!completed)
-		{
-			startTime -= Time.deltaTime;
-			if (startTime <= 0)
-			{
-				startTime = 0;
-				//Application.LoadLevel("main_menu");
+	void Update() {
+		if (!completed)	{
+			currentTime -= Time.deltaTime;
+			if (currentTime <= 0) {
+				currentTime = 0;
 			}
-			currentTime = string.Format("{0:0.0}", startTime);
+			currentTimeStr = string.Format("{0:0.0}", currentTime);
 		}
 	}
 
-	void Start()
-	{
-//		totalTokenCount = tokenParent.transform.childCount;
-
-
-		if (PlayerPrefs.GetInt("Level Completed") > 0)
-		{
+	void Start() {
+		currentTime = startTime;
+		if (PlayerPrefs.GetInt("Level Completed") > 0) {
 			currentLevel = PlayerPrefs.GetInt("Level Completed");
-		} else {
+			Random.seed = PlayerPrefs.GetInt ("Seed ");
+		} 
+		else {
 			currentLevel = 0;
 		}
-
-			
 	}
-	
-	public void CompleteLevel()
-	{
+
+	public void CompleteLevel()	{
 		showWinScreen = true;
 		completed = true;
 	}
 
-	void LoadNextLevel()
-	{
-		if (currentLevel < 4)
-		{
+	void LoadNextLevel() {
+		if (currentLevel < 4) {
 			currentLevel += 1;
 			print (currentLevel);
 			SaveGame();
 			Application.LoadLevel(1);
-		} else {
+		} 
+		else {
 			print ("You win!");
 		}
 	}
 
-	void SaveGame()
-	{
+	void SaveGame()	{
 		PlayerPrefs.SetInt("Level Completed", currentLevel);
 		PlayerPrefs.SetInt("Level " + currentLevel.ToString() + " score", currentScore);
+		//PlayerPrefs.SetInt("Seed ", Random.seed);
 	}
 
-	void OnGUI()
-	{
+	void OnGUI() {
 		GUI.skin = skin;
-		if (startTime < 5f)
-		{
+		if (startTime < 5f)	{
 			skin.GetStyle("Timer").normal.textColor = warningColorTimer;
-		} else {
+		} 
+		else {
 			skin.GetStyle("Timer").normal.textColor = defaultColorTimer;
 		}
-		GUI.Label (timerRect, currentTime, skin.GetStyle ("Timer"));
-		GUI.Label (new Rect(45,100,200,200), tokenCount.ToString() + "/" + totalTokenCount.ToString());
+		GUI.Label (timerRect, currentTimeStr, skin.GetStyle ("Timer"));
 
 
-		if (showWinScreen)
-		{
-			if (currentLevel == 0)
-			{
+		if (showWinScreen) {
+			if (currentLevel == 0) {
 				currentLevel = 1;
 			}
 
@@ -108,45 +93,25 @@ public class GameManager : MonoBehaviour {
 			int gameTime = (int)startTime;
 
 
-			if(currentLevel < 4)
-			{
-			if (GUI.Button(new Rect(winScreenRect.x + winScreenRect.width - 170, winScreenRect.y + winScreenRect.height - 60, 150, 40), "Continue"))
-			{
-				LoadNextLevel();
+			if(currentLevel < 4) {
+				if (GUI.Button(new Rect(winScreenRect.x + winScreenRect.width - 170, winScreenRect.y + winScreenRect.height - 60, 150, 40), "Continue")) {
+					LoadNextLevel();
+				}
 			}
-			}
-			if (GUI.Button(new Rect(winScreenRect.x + 20, winScreenRect.y + winScreenRect.height - 60, 100, 40), "Quit"))
-			{
+
+			if (GUI.Button(new Rect(winScreenRect.x + 20, winScreenRect.y + winScreenRect.height - 60, 100, 40), "Quit")) {
 				Application.LoadLevel("Return Menu");
 			}
 
-		        
 
-
-			if(currentLevel == 4)
-			{
-			GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 40, 300, 50), currentScore.ToString() + 
-			          " Score" );
-
-			GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 70, 300, 50), "CONGRATULATIONS YOU WINNN!!");
+			if(currentLevel == 4) {
+				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 40, 300, 50), currentScore.ToString() + " Score" );
+				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 70, 300, 50), "CONGRATULATIONS YOU WINNN!!");
 			}
-			else
-			{
-				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 40, 300, 50), currentScore.ToString() + 
-				          " Score" );
-				
+			else {
+				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 40, 300, 50), currentScore.ToString() + " Score" );
 				GUI.Label(new Rect(winScreenRect.x + 20, winScreenRect.y + 70, 300, 50), "Completed Level  "+currentLevel);
 			}
-
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
